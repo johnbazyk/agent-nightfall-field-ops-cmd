@@ -1,34 +1,29 @@
 # Spin-Up Guide — Agent Nightfall Field Operations (CMD Secure)
 
-This repository contains everything needed to stand up the full kit on a dedicated multi-agent account.
-
-## Agents to Create
-Create these agents using the exact system prompts in the `agents/` folder:
-
-1. **Field Supervisor** (`agents/field-supervisor.md`) — single human interface and orchestrator
-2. **Device Programmer** (`agents/device-programmer.md`) — cameras and IP devices (ONVIF-first, Axis / Milesight / Uniview focus)
-3. **VMS Programmer** (`agents/vms-programmer.md`) — DW Spectrum or company VMS
-4. **Credentials Manager** (`agents/credentials-manager.md`) — generate, store in 1Password, then apply
-5. **Job Reporter** (`agents/job-reporter.md`) — CompanyCam images, report template, and client delivery
-6. **Kit / Computer Manager** (`agents/kit-manager.md`) — owns the Windows 10 field computer (isolation, firewall, residual cleanup)
-
-(Note: `host-computer.md` is retained for reference but the active agent is Kit / Computer Manager.)
+This repository contains everything needed to stand up the full kit on a dedicated multi-agent account and configure the Windows 10 field computer.
 
 ## Steps
 
-1. Open the dedicated multi-agent account (Grok Bot / SuperGrok).
-2. Create the six agents above by pasting the full system prompts from their files.
-3. Connect the account to CompanyCam, 1Password (or company password manager), and Workiz (or ticketing system) with least privilege.
-4. Review and fill in company standards in `examples/cmd-secure-standards.example.yaml`.
-5. Configure the Windows 10 field computer per `docs/windows-kit-setup.md`.
-6. Run Phase 0 isolation checks in `docs/isolation-standard.md` before any real job.
+1. Create or open the dedicated multi-agent account (Grok Bot / SuperGrok or equivalent).
+2. Create the following agents using the exact system prompts from the files in `agents/`:
+   - Field Supervisor (`agents/field-supervisor.md`)
+   - Device Programmer (`agents/device-programmer.md`)
+   - VMS Programmer (`agents/vms-programmer.md`)
+   - Credentials Manager (`agents/credentials-manager.md`)
+   - Job Reporter (`agents/job-reporter.md`) — CompanyCam focused
+   - Kit / Computer Manager (`agents/kit-manager.md`) — owns the Windows 10 host
+3. Connect the account to CompanyCam, 1Password (or equivalent), and Workiz as required. Use least privilege.
+4. Configure the Windows 10 field computer according to `docs/windows-kit-setup.md`.
+5. Review and fill in the company standards in `examples/cmd-secure-standards.example.yaml`.
+6. Run the Phase 0 isolation checks in `docs/isolation-standard.md` and the host checklist in `docs/windows-kit-setup.md` before any real job.
 7. On site, the technician talks only to the Field Supervisor.
 
-## Failure Modes & Escalation (Field Supervisor)
-- Isolation fails or local interface gains a default route → stop all work, report to tech, do not proceed.
-- Device unreachable or auth fails after credential application → return to Device Programmer for dry-run recheck; escalate if persistent.
-- CompanyCam upload or report generation fails → Job Reporter reports details; do not deliver incomplete report.
-- Residual secrets found on kit → Kit Manager flags immediately; clean before next job.
-- Any scope violation or unexpected device → halt and confirm with technician.
+The Kit / Computer Manager tracks and verifies the host machine. The Job Reporter handles CompanyCam image uploads, report template design, and client report delivery after explicit approval.
 
-All high-stakes actions follow Plan → Approve → Execute → Verify. Never leave passwords or client data on the kit.
+All high-stakes actions follow Plan → Approve → Execute → Verify.
+
+## Failure Modes (Supervisor handles)
+- Isolation fails (wrong default route or local interface reachable beyond subnet): stop all work, escalate, do not proceed.
+- Camera auth failure or lockout: escalate; do not retry indefinitely.
+- CompanyCam upload or report generation fails: escalate before any client delivery.
+- Residual secrets found: clean before next job and escalate.

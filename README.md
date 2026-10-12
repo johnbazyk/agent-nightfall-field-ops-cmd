@@ -2,40 +2,38 @@
 
 **Company-specific version for Command Corporation / CMD Secure.**
 
-This is the internal Agent Nightfall Field Operations kit for temporary on-site programming of cameras and IP systems. It includes CompanyCam as the primary system for completion documentation, camera image uploads, and client-facing reports.
+This is the internal Agent Nightfall Field Operations kit for temporary on-site programming of cameras and IP systems. It includes CompanyCam for completion documentation and camera image uploads, plus a dedicated agent that tracks the Windows 10 field computer itself.
 
-A Field Supervisor is the only interface the technician uses. Specialists handle devices, VMS, credentials, and documentation under strict approval.
+A Field Supervisor is the only interface the technician uses. Specialists handle devices, VMS, credentials, documentation, and the host computer under strict approval.
 
 ---
 
-## CompanyCam Role
+## Agents
 
-CompanyCam is used for:
-- Uploading all camera images and site photos.
-- Designing and generating the client completion report.
-- Organizing project documentation.
-- Potential cleanup and standardization of existing CompanyCam structure.
+Create these from the prompts in `agents/`:
+- **Field Supervisor** — orchestrator and single human interface
+- **Device Programmer** — cameras (Axis, Milesight, Uniview + others; ONVIF-first)
+- **VMS Programmer** — DW Spectrum and similar
+- **Credentials Manager** — generate → store in 1Password → then apply
+- **Job Reporter** — CompanyCam project, image uploads, client report design and delivery
+- **Kit / Computer Manager** — owns the Windows 10 host (isolation, firewall, residual cleanup)
 
-The Job Reporter agent is responsible for designing the initial report template (if one does not exist), ensuring images are uploaded to the correct project, and generating/sharing the client-ready report.
+## Quick Start
 
-## Quick Start (CMD Secure)
-
-1. Use the dedicated multi-agent account.
-2. Load the agent prompts from the `agents/` folder.
-3. Confirm CompanyCam project exists for the job (or create one).
-4. Run Phase 0 isolation checks.
-5. On site, interact only with the Field Supervisor.
+1. Follow `SPIN-UP.md`.
+2. Configure the Windows computer per `docs/windows-kit-setup.md`.
+3. Run Phase 0 isolation checks before any real job.
+4. On site, talk only to the Field Supervisor.
 
 ## Core Principles
 
-Same isolation, approval, and credential rules as the generic template. CompanyCam access is treated as a controlled external system — credentials and tokens are not left on the kit.
+- Cellular sole default route; local interface locked to the device subnet.
+- Plan → Approve → Execute → Verify for every high-stakes write.
+- Generate credential → store immediately → then apply. Nothing left on the kit.
+- CompanyCam reports require explicit approval before client delivery.
 
-## Structure
-
-- `agents/` — Full prompts, including CompanyCam-aware Job Reporter
-- `docs/` — Isolation standard and CompanyCam workflow notes
-- `examples/` — CMD Secure standards placeholders
+See `docs/` for isolation, Windows setup, and CompanyCam workflow details.
 
 ---
 
-*Internal use for Command Corporation / CMD Secure. Adapt as needed.*
+*Internal use for Command Corporation / CMD Secure.*
