@@ -2,42 +2,40 @@
 
 **Company-specific version for Command Corporation / CMD Secure.**
 
-Temporary on-site multi-agent programming kit for cameras, NVRs/VMS, and IP systems. Includes CompanyCam integration for client-facing completion reports and camera image delivery.
+This is the internal Agent Nightfall Field Operations kit for temporary on-site programming of cameras and IP systems. It includes CompanyCam as the primary system for completion documentation, camera image uploads, and client-facing reports.
 
-A **Field Supervisor** is the only interface the tech talks to. Specialists handle discovery, configuration, credentials, VMS setup, and as-built documentation (via CompanyCam) under strict human approval.
+A Field Supervisor is the only interface the technician uses. Specialists handle devices, VMS, credentials, and documentation under strict approval.
 
 ---
 
-## CompanyCam Integration (Key for CMD Secure)
+## CompanyCam Role
 
-- The Job Reporter agent designs and maintains the client report template in CompanyCam.
-- All camera images and job photos are uploaded to the matching CompanyCam project.
-- Completion report is generated in CompanyCam and shared with the client.
-- Agents can assist with CompanyCam cleanup (project organization, tagging, archive of completed jobs).
+CompanyCam is used for:
+- Uploading all camera images and site photos.
+- Designing and generating the client completion report.
+- Organizing project documentation.
+- Potential cleanup and standardization of existing CompanyCam structure.
 
-See `agents/job-reporter.md` and `docs/companycam-workflow.md` for details.
+The Job Reporter agent is responsible for designing the initial report template (if one does not exist), ensuring images are uploaded to the correct project, and generating/sharing the client-ready report.
+
+## Quick Start (CMD Secure)
+
+1. Use the dedicated multi-agent account.
+2. Load the agent prompts from the `agents/` folder.
+3. Confirm CompanyCam project exists for the job (or create one).
+4. Run Phase 0 isolation checks.
+5. On site, interact only with the Field Supervisor.
 
 ## Core Principles
 
-- Cellular-only internet. Local interface locked to the target device subnet.
-- Plan → Approve → Execute → Verify.
-- Credentials generated, stored in 1Password (or company password manager), then applied.
-- ONVIF-first.
-- Explicit scope locks.
-
-## Quick Start
-
-1. Create the agents using the prompts in `agents/`.
-2. Configure CompanyCam API access (token stored securely).
-3. Run Phase 0 isolation tests.
-4. On site, talk only to the Field Supervisor.
+Same isolation, approval, and credential rules as the generic template. CompanyCam access is treated as a controlled external system — credentials and tokens are not left on the kit.
 
 ## Structure
 
-```
-agents/          Full system prompts (including CompanyCam-aware Job Reporter)
-docs/            Isolation standard, Phase 0, CompanyCam workflow
-examples/        CMD Secure company standards and sample job context
-```
+- `agents/` — Full prompts, including CompanyCam-aware Job Reporter
+- `docs/` — Isolation standard and CompanyCam workflow notes
+- `examples/` — CMD Secure standards placeholders
 
-Private company version. Do not share publicly.
+---
+
+*Internal use for Command Corporation / CMD Secure. Adapt as needed.*

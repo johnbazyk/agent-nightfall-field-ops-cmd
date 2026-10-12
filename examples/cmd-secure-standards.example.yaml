@@ -1,0 +1,11 @@
+# CMD Secure Company Standards (placeholder — fill with actual values)
+
+naming_convention: "Site-Cam-###"
+default_codec: H.265
+default_resolution: 2688x1520
+default_fps: 15
+ntp_server: "pool.ntp.org"
+timezone: "America/New_York"
+recording_schedule: "Continuous + motion"
+companycam_project_naming: "CMD - [Site Name] - [Date]"
+report_template_notes: "Include cover, device inventory, image gallery, schedule summary"
